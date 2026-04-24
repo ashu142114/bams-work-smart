@@ -14,16 +14,229 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      attendance: {
+        Row: {
+          company_id: string
+          created_at: string
+          date: string
+          id: string
+          in_lat: number | null
+          in_lng: number | null
+          out_lat: number | null
+          out_lng: number | null
+          punch_in_at: string
+          punch_out_at: string | null
+          selfie_url: string | null
+          status: string
+          task_update: string | null
+          user_id: string
+          work_update: string | null
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          date?: string
+          id?: string
+          in_lat?: number | null
+          in_lng?: number | null
+          out_lat?: number | null
+          out_lng?: number | null
+          punch_in_at?: string
+          punch_out_at?: string | null
+          selfie_url?: string | null
+          status?: string
+          task_update?: string | null
+          user_id: string
+          work_update?: string | null
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          date?: string
+          id?: string
+          in_lat?: number | null
+          in_lng?: number | null
+          out_lat?: number | null
+          out_lng?: number | null
+          punch_in_at?: string
+          punch_out_at?: string | null
+          selfie_url?: string | null
+          status?: string
+          task_update?: string | null
+          user_id?: string
+          work_update?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "attendance_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      companies: {
+        Row: {
+          created_at: string
+          geofence_radius_m: number
+          id: string
+          late_after: string
+          name: string
+          office_lat: number | null
+          office_lng: number | null
+          work_start: string
+        }
+        Insert: {
+          created_at?: string
+          geofence_radius_m?: number
+          id?: string
+          late_after?: string
+          name: string
+          office_lat?: number | null
+          office_lng?: number | null
+          work_start?: string
+        }
+        Update: {
+          created_at?: string
+          geofence_radius_m?: number
+          id?: string
+          late_after?: string
+          name?: string
+          office_lat?: number | null
+          office_lng?: number | null
+          work_start?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          company_id: string | null
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          monthly_salary: number
+          team_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          company_id?: string | null
+          created_at?: string
+          email: string
+          full_name: string
+          id: string
+          monthly_salary?: number
+          team_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          company_id?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          monthly_salary?: number
+          team_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "profiles_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      teams: {
+        Row: {
+          company_id: string
+          created_at: string
+          id: string
+          leader_id: string | null
+          name: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          id?: string
+          leader_id?: string | null
+          name: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          id?: string
+          leader_id?: string | null
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "teams_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          company_id: string | null
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          company_id?: string | null
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          company_id?: string | null
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_roles_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_user_company: { Args: { _user_id: string }; Returns: string }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "hr" | "leader" | "employee"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +363,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "hr", "leader", "employee"],
+    },
   },
 } as const
