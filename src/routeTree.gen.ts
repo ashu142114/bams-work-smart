@@ -13,8 +13,10 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LeaderTeamRouteImport } from './routes/leader.team'
 import { Route as LeaderHomeRouteImport } from './routes/leader.home'
 import { Route as LeaderAttendanceRouteImport } from './routes/leader.attendance'
+import { Route as HrTeamRouteImport } from './routes/hr.team'
 import { Route as HrHomeRouteImport } from './routes/hr.home'
 import { Route as HrAttendanceRouteImport } from './routes/hr.attendance'
 import { Route as EmployeeHomeRouteImport } from './routes/employee.home'
@@ -44,6 +46,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LeaderTeamRoute = LeaderTeamRouteImport.update({
+  id: '/leader/team',
+  path: '/leader/team',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LeaderHomeRoute = LeaderHomeRouteImport.update({
   id: '/leader/home',
   path: '/leader/home',
@@ -52,6 +59,11 @@ const LeaderHomeRoute = LeaderHomeRouteImport.update({
 const LeaderAttendanceRoute = LeaderAttendanceRouteImport.update({
   id: '/leader/attendance',
   path: '/leader/attendance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HrTeamRoute = HrTeamRouteImport.update({
+  id: '/hr/team',
+  path: '/hr/team',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HrHomeRoute = HrHomeRouteImport.update({
@@ -108,8 +120,10 @@ export interface FileRoutesByFullPath {
   '/employee/home': typeof EmployeeHomeRoute
   '/hr/attendance': typeof HrAttendanceRoute
   '/hr/home': typeof HrHomeRoute
+  '/hr/team': typeof HrTeamRoute
   '/leader/attendance': typeof LeaderAttendanceRoute
   '/leader/home': typeof LeaderHomeRoute
+  '/leader/team': typeof LeaderTeamRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -124,8 +138,10 @@ export interface FileRoutesByTo {
   '/employee/home': typeof EmployeeHomeRoute
   '/hr/attendance': typeof HrAttendanceRoute
   '/hr/home': typeof HrHomeRoute
+  '/hr/team': typeof HrTeamRoute
   '/leader/attendance': typeof LeaderAttendanceRoute
   '/leader/home': typeof LeaderHomeRoute
+  '/leader/team': typeof LeaderTeamRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -141,8 +157,10 @@ export interface FileRoutesById {
   '/employee/home': typeof EmployeeHomeRoute
   '/hr/attendance': typeof HrAttendanceRoute
   '/hr/home': typeof HrHomeRoute
+  '/hr/team': typeof HrTeamRoute
   '/leader/attendance': typeof LeaderAttendanceRoute
   '/leader/home': typeof LeaderHomeRoute
+  '/leader/team': typeof LeaderTeamRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -159,8 +177,10 @@ export interface FileRouteTypes {
     | '/employee/home'
     | '/hr/attendance'
     | '/hr/home'
+    | '/hr/team'
     | '/leader/attendance'
     | '/leader/home'
+    | '/leader/team'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -175,8 +195,10 @@ export interface FileRouteTypes {
     | '/employee/home'
     | '/hr/attendance'
     | '/hr/home'
+    | '/hr/team'
     | '/leader/attendance'
     | '/leader/home'
+    | '/leader/team'
   id:
     | '__root__'
     | '/'
@@ -191,8 +213,10 @@ export interface FileRouteTypes {
     | '/employee/home'
     | '/hr/attendance'
     | '/hr/home'
+    | '/hr/team'
     | '/leader/attendance'
     | '/leader/home'
+    | '/leader/team'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -208,8 +232,10 @@ export interface RootRouteChildren {
   EmployeeHomeRoute: typeof EmployeeHomeRoute
   HrAttendanceRoute: typeof HrAttendanceRoute
   HrHomeRoute: typeof HrHomeRoute
+  HrTeamRoute: typeof HrTeamRoute
   LeaderAttendanceRoute: typeof LeaderAttendanceRoute
   LeaderHomeRoute: typeof LeaderHomeRoute
+  LeaderTeamRoute: typeof LeaderTeamRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -242,6 +268,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/leader/team': {
+      id: '/leader/team'
+      path: '/leader/team'
+      fullPath: '/leader/team'
+      preLoaderRoute: typeof LeaderTeamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/leader/home': {
       id: '/leader/home'
       path: '/leader/home'
@@ -254,6 +287,13 @@ declare module '@tanstack/react-router' {
       path: '/leader/attendance'
       fullPath: '/leader/attendance'
       preLoaderRoute: typeof LeaderAttendanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hr/team': {
+      id: '/hr/team'
+      path: '/hr/team'
+      fullPath: '/hr/team'
+      preLoaderRoute: typeof HrTeamRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/hr/home': {
@@ -328,8 +368,10 @@ const rootRouteChildren: RootRouteChildren = {
   EmployeeHomeRoute: EmployeeHomeRoute,
   HrAttendanceRoute: HrAttendanceRoute,
   HrHomeRoute: HrHomeRoute,
+  HrTeamRoute: HrTeamRoute,
   LeaderAttendanceRoute: LeaderAttendanceRoute,
   LeaderHomeRoute: LeaderHomeRoute,
+  LeaderTeamRoute: LeaderTeamRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
