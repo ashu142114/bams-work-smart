@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as HrHomeRouteImport } from './routes/hr.home'
 import { Route as EmployeeHomeRouteImport } from './routes/employee.home'
 import { Route as EmployeeAttendanceRouteImport } from './routes/employee.attendance'
 import { Route as AdminTeamRouteImport } from './routes/admin.team'
@@ -32,6 +33,11 @@ const LoginRoute = LoginRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HrHomeRoute = HrHomeRouteImport.update({
+  id: '/hr/home',
+  path: '/hr/home',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EmployeeHomeRoute = EmployeeHomeRouteImport.update({
@@ -75,6 +81,7 @@ export interface FileRoutesByFullPath {
   '/admin/team': typeof AdminTeamRoute
   '/employee/attendance': typeof EmployeeAttendanceRoute
   '/employee/home': typeof EmployeeHomeRoute
+  '/hr/home': typeof HrHomeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -86,6 +93,7 @@ export interface FileRoutesByTo {
   '/admin/team': typeof AdminTeamRoute
   '/employee/attendance': typeof EmployeeAttendanceRoute
   '/employee/home': typeof EmployeeHomeRoute
+  '/hr/home': typeof HrHomeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -98,6 +106,7 @@ export interface FileRoutesById {
   '/admin/team': typeof AdminTeamRoute
   '/employee/attendance': typeof EmployeeAttendanceRoute
   '/employee/home': typeof EmployeeHomeRoute
+  '/hr/home': typeof HrHomeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -111,6 +120,7 @@ export interface FileRouteTypes {
     | '/admin/team'
     | '/employee/attendance'
     | '/employee/home'
+    | '/hr/home'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -122,6 +132,7 @@ export interface FileRouteTypes {
     | '/admin/team'
     | '/employee/attendance'
     | '/employee/home'
+    | '/hr/home'
   id:
     | '__root__'
     | '/'
@@ -133,6 +144,7 @@ export interface FileRouteTypes {
     | '/admin/team'
     | '/employee/attendance'
     | '/employee/home'
+    | '/hr/home'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -145,6 +157,7 @@ export interface RootRouteChildren {
   AdminTeamRoute: typeof AdminTeamRoute
   EmployeeAttendanceRoute: typeof EmployeeAttendanceRoute
   EmployeeHomeRoute: typeof EmployeeHomeRoute
+  HrHomeRoute: typeof HrHomeRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -168,6 +181,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hr/home': {
+      id: '/hr/home'
+      path: '/hr/home'
+      fullPath: '/hr/home'
+      preLoaderRoute: typeof HrHomeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/employee/home': {
@@ -225,6 +245,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminTeamRoute: AdminTeamRoute,
   EmployeeAttendanceRoute: EmployeeAttendanceRoute,
   EmployeeHomeRoute: EmployeeHomeRoute,
+  HrHomeRoute: HrHomeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
