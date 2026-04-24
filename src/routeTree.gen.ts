@@ -10,9 +10,13 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LeaderHomeRouteImport } from './routes/leader.home'
+import { Route as LeaderAttendanceRouteImport } from './routes/leader.attendance'
 import { Route as HrHomeRouteImport } from './routes/hr.home'
+import { Route as HrAttendanceRouteImport } from './routes/hr.attendance'
 import { Route as EmployeeHomeRouteImport } from './routes/employee.home'
 import { Route as EmployeeAttendanceRouteImport } from './routes/employee.attendance'
 import { Route as AdminTeamRouteImport } from './routes/admin.team'
@@ -25,6 +29,11 @@ const SignupRoute = SignupRouteImport.update({
   path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -35,9 +44,24 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LeaderHomeRoute = LeaderHomeRouteImport.update({
+  id: '/leader/home',
+  path: '/leader/home',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LeaderAttendanceRoute = LeaderAttendanceRouteImport.update({
+  id: '/leader/attendance',
+  path: '/leader/attendance',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HrHomeRoute = HrHomeRouteImport.update({
   id: '/hr/home',
   path: '/hr/home',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HrAttendanceRoute = HrAttendanceRouteImport.update({
+  id: '/hr/attendance',
+  path: '/hr/attendance',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EmployeeHomeRoute = EmployeeHomeRouteImport.update({
@@ -74,6 +98,7 @@ const AdminAttendanceRoute = AdminAttendanceRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
   '/signup': typeof SignupRoute
   '/admin/attendance': typeof AdminAttendanceRoute
   '/admin/home': typeof AdminHomeRoute
@@ -81,11 +106,15 @@ export interface FileRoutesByFullPath {
   '/admin/team': typeof AdminTeamRoute
   '/employee/attendance': typeof EmployeeAttendanceRoute
   '/employee/home': typeof EmployeeHomeRoute
+  '/hr/attendance': typeof HrAttendanceRoute
   '/hr/home': typeof HrHomeRoute
+  '/leader/attendance': typeof LeaderAttendanceRoute
+  '/leader/home': typeof LeaderHomeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
   '/signup': typeof SignupRoute
   '/admin/attendance': typeof AdminAttendanceRoute
   '/admin/home': typeof AdminHomeRoute
@@ -93,12 +122,16 @@ export interface FileRoutesByTo {
   '/admin/team': typeof AdminTeamRoute
   '/employee/attendance': typeof EmployeeAttendanceRoute
   '/employee/home': typeof EmployeeHomeRoute
+  '/hr/attendance': typeof HrAttendanceRoute
   '/hr/home': typeof HrHomeRoute
+  '/leader/attendance': typeof LeaderAttendanceRoute
+  '/leader/home': typeof LeaderHomeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
   '/signup': typeof SignupRoute
   '/admin/attendance': typeof AdminAttendanceRoute
   '/admin/home': typeof AdminHomeRoute
@@ -106,13 +139,17 @@ export interface FileRoutesById {
   '/admin/team': typeof AdminTeamRoute
   '/employee/attendance': typeof EmployeeAttendanceRoute
   '/employee/home': typeof EmployeeHomeRoute
+  '/hr/attendance': typeof HrAttendanceRoute
   '/hr/home': typeof HrHomeRoute
+  '/leader/attendance': typeof LeaderAttendanceRoute
+  '/leader/home': typeof LeaderHomeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/login'
+    | '/onboarding'
     | '/signup'
     | '/admin/attendance'
     | '/admin/home'
@@ -120,11 +157,15 @@ export interface FileRouteTypes {
     | '/admin/team'
     | '/employee/attendance'
     | '/employee/home'
+    | '/hr/attendance'
     | '/hr/home'
+    | '/leader/attendance'
+    | '/leader/home'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/login'
+    | '/onboarding'
     | '/signup'
     | '/admin/attendance'
     | '/admin/home'
@@ -132,11 +173,15 @@ export interface FileRouteTypes {
     | '/admin/team'
     | '/employee/attendance'
     | '/employee/home'
+    | '/hr/attendance'
     | '/hr/home'
+    | '/leader/attendance'
+    | '/leader/home'
   id:
     | '__root__'
     | '/'
     | '/login'
+    | '/onboarding'
     | '/signup'
     | '/admin/attendance'
     | '/admin/home'
@@ -144,12 +189,16 @@ export interface FileRouteTypes {
     | '/admin/team'
     | '/employee/attendance'
     | '/employee/home'
+    | '/hr/attendance'
     | '/hr/home'
+    | '/leader/attendance'
+    | '/leader/home'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
+  OnboardingRoute: typeof OnboardingRoute
   SignupRoute: typeof SignupRoute
   AdminAttendanceRoute: typeof AdminAttendanceRoute
   AdminHomeRoute: typeof AdminHomeRoute
@@ -157,7 +206,10 @@ export interface RootRouteChildren {
   AdminTeamRoute: typeof AdminTeamRoute
   EmployeeAttendanceRoute: typeof EmployeeAttendanceRoute
   EmployeeHomeRoute: typeof EmployeeHomeRoute
+  HrAttendanceRoute: typeof HrAttendanceRoute
   HrHomeRoute: typeof HrHomeRoute
+  LeaderAttendanceRoute: typeof LeaderAttendanceRoute
+  LeaderHomeRoute: typeof LeaderHomeRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -167,6 +219,13 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -183,11 +242,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/leader/home': {
+      id: '/leader/home'
+      path: '/leader/home'
+      fullPath: '/leader/home'
+      preLoaderRoute: typeof LeaderHomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/leader/attendance': {
+      id: '/leader/attendance'
+      path: '/leader/attendance'
+      fullPath: '/leader/attendance'
+      preLoaderRoute: typeof LeaderAttendanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/hr/home': {
       id: '/hr/home'
       path: '/hr/home'
       fullPath: '/hr/home'
       preLoaderRoute: typeof HrHomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hr/attendance': {
+      id: '/hr/attendance'
+      path: '/hr/attendance'
+      fullPath: '/hr/attendance'
+      preLoaderRoute: typeof HrAttendanceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/employee/home': {
@@ -238,6 +318,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
+  OnboardingRoute: OnboardingRoute,
   SignupRoute: SignupRoute,
   AdminAttendanceRoute: AdminAttendanceRoute,
   AdminHomeRoute: AdminHomeRoute,
@@ -245,7 +326,10 @@ const rootRouteChildren: RootRouteChildren = {
   AdminTeamRoute: AdminTeamRoute,
   EmployeeAttendanceRoute: EmployeeAttendanceRoute,
   EmployeeHomeRoute: EmployeeHomeRoute,
+  HrAttendanceRoute: HrAttendanceRoute,
   HrHomeRoute: HrHomeRoute,
+  LeaderAttendanceRoute: LeaderAttendanceRoute,
+  LeaderHomeRoute: LeaderHomeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
