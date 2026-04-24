@@ -15,6 +15,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as EmployeeHomeRouteImport } from './routes/employee.home'
 import { Route as EmployeeAttendanceRouteImport } from './routes/employee.attendance'
 import { Route as AdminTeamRouteImport } from './routes/admin.team'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminHomeRouteImport } from './routes/admin.home'
 import { Route as AdminAttendanceRouteImport } from './routes/admin.attendance'
 
@@ -48,6 +49,11 @@ const AdminTeamRoute = AdminTeamRouteImport.update({
   path: '/admin/team',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/admin/settings',
+  path: '/admin/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminHomeRoute = AdminHomeRouteImport.update({
   id: '/admin/home',
   path: '/admin/home',
@@ -65,6 +71,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/admin/attendance': typeof AdminAttendanceRoute
   '/admin/home': typeof AdminHomeRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/team': typeof AdminTeamRoute
   '/employee/attendance': typeof EmployeeAttendanceRoute
   '/employee/home': typeof EmployeeHomeRoute
@@ -75,6 +82,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/admin/attendance': typeof AdminAttendanceRoute
   '/admin/home': typeof AdminHomeRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/team': typeof AdminTeamRoute
   '/employee/attendance': typeof EmployeeAttendanceRoute
   '/employee/home': typeof EmployeeHomeRoute
@@ -86,6 +94,7 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/admin/attendance': typeof AdminAttendanceRoute
   '/admin/home': typeof AdminHomeRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/team': typeof AdminTeamRoute
   '/employee/attendance': typeof EmployeeAttendanceRoute
   '/employee/home': typeof EmployeeHomeRoute
@@ -98,6 +107,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/admin/attendance'
     | '/admin/home'
+    | '/admin/settings'
     | '/admin/team'
     | '/employee/attendance'
     | '/employee/home'
@@ -108,6 +118,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/admin/attendance'
     | '/admin/home'
+    | '/admin/settings'
     | '/admin/team'
     | '/employee/attendance'
     | '/employee/home'
@@ -118,6 +129,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/admin/attendance'
     | '/admin/home'
+    | '/admin/settings'
     | '/admin/team'
     | '/employee/attendance'
     | '/employee/home'
@@ -129,6 +141,7 @@ export interface RootRouteChildren {
   SignupRoute: typeof SignupRoute
   AdminAttendanceRoute: typeof AdminAttendanceRoute
   AdminHomeRoute: typeof AdminHomeRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
   AdminTeamRoute: typeof AdminTeamRoute
   EmployeeAttendanceRoute: typeof EmployeeAttendanceRoute
   EmployeeHomeRoute: typeof EmployeeHomeRoute
@@ -178,6 +191,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminTeamRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/home': {
       id: '/admin/home'
       path: '/admin/home'
@@ -201,6 +221,7 @@ const rootRouteChildren: RootRouteChildren = {
   SignupRoute: SignupRoute,
   AdminAttendanceRoute: AdminAttendanceRoute,
   AdminHomeRoute: AdminHomeRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
   AdminTeamRoute: AdminTeamRoute,
   EmployeeAttendanceRoute: EmployeeAttendanceRoute,
   EmployeeHomeRoute: EmployeeHomeRoute,
