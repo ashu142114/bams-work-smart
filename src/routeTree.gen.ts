@@ -14,6 +14,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EmployeeHomeRouteImport } from './routes/employee.home'
 import { Route as EmployeeAttendanceRouteImport } from './routes/employee.attendance'
+import { Route as AdminHomeRouteImport } from './routes/admin.home'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -40,11 +41,17 @@ const EmployeeAttendanceRoute = EmployeeAttendanceRouteImport.update({
   path: '/employee/attendance',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminHomeRoute = AdminHomeRouteImport.update({
+  id: '/admin/home',
+  path: '/admin/home',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/admin/home': typeof AdminHomeRoute
   '/employee/attendance': typeof EmployeeAttendanceRoute
   '/employee/home': typeof EmployeeHomeRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/admin/home': typeof AdminHomeRoute
   '/employee/attendance': typeof EmployeeAttendanceRoute
   '/employee/home': typeof EmployeeHomeRoute
 }
@@ -60,6 +68,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/admin/home': typeof AdminHomeRoute
   '/employee/attendance': typeof EmployeeAttendanceRoute
   '/employee/home': typeof EmployeeHomeRoute
 }
@@ -69,15 +78,23 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/signup'
+    | '/admin/home'
     | '/employee/attendance'
     | '/employee/home'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/signup' | '/employee/attendance' | '/employee/home'
+  to:
+    | '/'
+    | '/login'
+    | '/signup'
+    | '/admin/home'
+    | '/employee/attendance'
+    | '/employee/home'
   id:
     | '__root__'
     | '/'
     | '/login'
     | '/signup'
+    | '/admin/home'
     | '/employee/attendance'
     | '/employee/home'
   fileRoutesById: FileRoutesById
@@ -86,6 +103,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
   SignupRoute: typeof SignupRoute
+  AdminHomeRoute: typeof AdminHomeRoute
   EmployeeAttendanceRoute: typeof EmployeeAttendanceRoute
   EmployeeHomeRoute: typeof EmployeeHomeRoute
 }
@@ -127,6 +145,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EmployeeAttendanceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/home': {
+      id: '/admin/home'
+      path: '/admin/home'
+      fullPath: '/admin/home'
+      preLoaderRoute: typeof AdminHomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -134,9 +159,19 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
   SignupRoute: SignupRoute,
+  AdminHomeRoute: AdminHomeRoute,
   EmployeeAttendanceRoute: EmployeeAttendanceRoute,
   EmployeeHomeRoute: EmployeeHomeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
