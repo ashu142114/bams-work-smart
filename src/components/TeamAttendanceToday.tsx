@@ -27,16 +27,17 @@ export function TeamAttendanceToday() {
 
   useEffect(() => {
     if (!profile?.company_id) return;
+    const companyId = profile.company_id;
     const today = new Date().toISOString().slice(0, 10);
     (async () => {
       const [{ data: att }, { data: profiles }] = await Promise.all([
         supabase
           .from("attendance")
           .select("id,user_id,punch_in_at,punch_out_at,status")
-          .eq("company_id", profile.company_id)
+          .eq("company_id", companyId)
           .eq("date", today)
           .order("punch_in_at", { ascending: false }),
-        supabase.from("profiles").select("id,full_name").eq("company_id", profile.company_id),
+        supabase.from("profiles").select("id,full_name").eq("company_id", companyId),
       ]);
       setRows((att as Row[]) ?? []);
       const map: Record<string, string> = {};
