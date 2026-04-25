@@ -1,5 +1,5 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { Home, Clock, Users, Settings, ClipboardList } from "lucide-react";
+import { Home, Clock, Users, Settings, ClipboardList, UserCog } from "lucide-react";
 import { useAuth, type AppRole } from "@/lib/auth";
 
 type NavItem = { to: string; label: string; icon: React.ComponentType<{ className?: string }> };
@@ -8,12 +8,14 @@ const navByRole: Record<AppRole, NavItem[]> = {
   admin: [
     { to: "/admin/home", label: "Home", icon: Home },
     { to: "/admin/attendance", label: "Attendance", icon: Clock },
+    { to: "/admin/users", label: "Users", icon: UserCog },
     { to: "/admin/team", label: "Team", icon: Users },
     { to: "/admin/settings", label: "Settings", icon: Settings },
   ],
   hr: [
     { to: "/hr/home", label: "Home", icon: Home },
     { to: "/hr/attendance", label: "Attendance", icon: Clock },
+    { to: "/hr/users", label: "Users", icon: UserCog },
     { to: "/hr/team", label: "Team", icon: Users },
   ],
   leader: [
