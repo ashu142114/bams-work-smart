@@ -2,3 +2,6 @@ project_id = "hyvdgdfzyzpkzihucxob"
 
 [functions.seed-demo-users]
 verify_jwt = false
+
+[functions.manage-users]
+verify_jwt = true
