@@ -29,7 +29,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Loader2, Plus, Pencil, Trash2, Eye, EyeOff, Search, Users as UsersIcon } from "lucide-react";
+import { Loader2, Plus, Pencil, Trash2, Eye, EyeOff, Search, Users as UsersIcon, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 
 interface Team {
@@ -55,6 +55,7 @@ export function UserManagement({ actor }: { actor: "admin" | "hr" }) {
   const [users, setUsers] = useState<UserRow[] | null>(null);
   const [teams, setTeams] = useState<Team[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
 
   const [search, setSearch] = useState("");
   const [filterRole, setFilterRole] = useState<string>("all");
@@ -95,6 +96,22 @@ export function UserManagement({ actor }: { actor: "admin" | "hr" }) {
     } catch (e) {
       setError(e instanceof Error ? e.message : "Failed to load");
     }
+  };
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    try {
+      await load();
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
+  const hasFilters = search.trim() !== "" || filterRole !== "all" || filterTeam !== "all";
+  const clearFilters = () => {
+    setSearch("");
+    setFilterRole("all");
+    setFilterTeam("all");
   };
 
   useEffect(() => {
@@ -169,9 +186,29 @@ export function UserManagement({ actor }: { actor: "admin" | "hr" }) {
       </div>
 
       {filtered.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-border p-8 text-center">
-          <UsersIcon className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-          <p className="text-sm text-muted-foreground">No users match your filters</p>
+        <div className="rounded-2xl border border-dashed border-border p-8 text-center flex flex-col items-center">
+          <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center mb-3">
+            <UsersIcon className="h-7 w-7 text-primary" />
+          </div>
+          <p className="text-base font-semibold mb-1">
+            {hasFilters ? "No matches found" : "No users yet"}
+          </p>
+          <p className="text-sm text-muted-foreground max-w-xs mb-4">
+            {hasFilters
+              ? "Try adjusting your search or filters to find who you're looking for."
+              : "Your team is empty. Add your first user or refresh to check again."}
+          </p>
+          <div className="flex items-center gap-2">
+            {hasFilters && (
+              <Button size="sm" variant="outline" onClick={clearFilters}>
+                Clear filters
+              </Button>
+            )}
+            <Button size="sm" variant="outline" onClick={handleRefresh} disabled={refreshing}>
+              <RefreshCw className={`h-4 w-4 mr-1.5 ${refreshing ? "animate-spin" : ""}`} />
+              Refresh
+            </Button>
+          </div>
         </div>
       ) : (
         <ul className="space-y-2">
