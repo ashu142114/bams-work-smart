@@ -1,1 +1,0 @@
-import React from 'react';\nimport ReactDOM from 'react-dom';\nimport { BrowserRouter as Router } from 'react-router-dom';\nimport AuthProvider from './context/AuthProvider';\nimport App from './App';\n\nconst Main = () => (\n  <AuthProvider>\n    <Router>\n      <App />\n    </Router>\n  </AuthProvider>\n);\n\nReactDOM.render(<Main />, document.getElementById('root'));
