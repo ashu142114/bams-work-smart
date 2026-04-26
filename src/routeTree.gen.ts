@@ -14,16 +14,20 @@ import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LeaderTeamRouteImport } from './routes/leader.team'
+import { Route as LeaderTasksRouteImport } from './routes/leader.tasks'
+import { Route as LeaderReviewRouteImport } from './routes/leader.review'
 import { Route as LeaderHomeRouteImport } from './routes/leader.home'
 import { Route as LeaderAttendanceRouteImport } from './routes/leader.attendance'
 import { Route as HrUsersRouteImport } from './routes/hr.users'
 import { Route as HrTeamRouteImport } from './routes/hr.team'
 import { Route as HrHomeRouteImport } from './routes/hr.home'
 import { Route as HrAttendanceRouteImport } from './routes/hr.attendance'
+import { Route as EmployeeTasksRouteImport } from './routes/employee.tasks'
 import { Route as EmployeeHomeRouteImport } from './routes/employee.home'
 import { Route as EmployeeAttendanceRouteImport } from './routes/employee.attendance'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AdminTeamRouteImport } from './routes/admin.team'
+import { Route as AdminTasksRouteImport } from './routes/admin.tasks'
 import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminHomeRouteImport } from './routes/admin.home'
 import { Route as AdminAttendanceRouteImport } from './routes/admin.attendance'
@@ -51,6 +55,16 @@ const IndexRoute = IndexRouteImport.update({
 const LeaderTeamRoute = LeaderTeamRouteImport.update({
   id: '/leader/team',
   path: '/leader/team',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LeaderTasksRoute = LeaderTasksRouteImport.update({
+  id: '/leader/tasks',
+  path: '/leader/tasks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LeaderReviewRoute = LeaderReviewRouteImport.update({
+  id: '/leader/review',
+  path: '/leader/review',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LeaderHomeRoute = LeaderHomeRouteImport.update({
@@ -83,6 +97,11 @@ const HrAttendanceRoute = HrAttendanceRouteImport.update({
   path: '/hr/attendance',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EmployeeTasksRoute = EmployeeTasksRouteImport.update({
+  id: '/employee/tasks',
+  path: '/employee/tasks',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EmployeeHomeRoute = EmployeeHomeRouteImport.update({
   id: '/employee/home',
   path: '/employee/home',
@@ -101,6 +120,11 @@ const AdminUsersRoute = AdminUsersRouteImport.update({
 const AdminTeamRoute = AdminTeamRouteImport.update({
   id: '/admin/team',
   path: '/admin/team',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminTasksRoute = AdminTasksRouteImport.update({
+  id: '/admin/tasks',
+  path: '/admin/tasks',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminSettingsRoute = AdminSettingsRouteImport.update({
@@ -127,16 +151,20 @@ export interface FileRoutesByFullPath {
   '/admin/attendance': typeof AdminAttendanceRoute
   '/admin/home': typeof AdminHomeRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/admin/tasks': typeof AdminTasksRoute
   '/admin/team': typeof AdminTeamRoute
   '/admin/users': typeof AdminUsersRoute
   '/employee/attendance': typeof EmployeeAttendanceRoute
   '/employee/home': typeof EmployeeHomeRoute
+  '/employee/tasks': typeof EmployeeTasksRoute
   '/hr/attendance': typeof HrAttendanceRoute
   '/hr/home': typeof HrHomeRoute
   '/hr/team': typeof HrTeamRoute
   '/hr/users': typeof HrUsersRoute
   '/leader/attendance': typeof LeaderAttendanceRoute
   '/leader/home': typeof LeaderHomeRoute
+  '/leader/review': typeof LeaderReviewRoute
+  '/leader/tasks': typeof LeaderTasksRoute
   '/leader/team': typeof LeaderTeamRoute
 }
 export interface FileRoutesByTo {
@@ -147,16 +175,20 @@ export interface FileRoutesByTo {
   '/admin/attendance': typeof AdminAttendanceRoute
   '/admin/home': typeof AdminHomeRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/admin/tasks': typeof AdminTasksRoute
   '/admin/team': typeof AdminTeamRoute
   '/admin/users': typeof AdminUsersRoute
   '/employee/attendance': typeof EmployeeAttendanceRoute
   '/employee/home': typeof EmployeeHomeRoute
+  '/employee/tasks': typeof EmployeeTasksRoute
   '/hr/attendance': typeof HrAttendanceRoute
   '/hr/home': typeof HrHomeRoute
   '/hr/team': typeof HrTeamRoute
   '/hr/users': typeof HrUsersRoute
   '/leader/attendance': typeof LeaderAttendanceRoute
   '/leader/home': typeof LeaderHomeRoute
+  '/leader/review': typeof LeaderReviewRoute
+  '/leader/tasks': typeof LeaderTasksRoute
   '/leader/team': typeof LeaderTeamRoute
 }
 export interface FileRoutesById {
@@ -168,16 +200,20 @@ export interface FileRoutesById {
   '/admin/attendance': typeof AdminAttendanceRoute
   '/admin/home': typeof AdminHomeRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/admin/tasks': typeof AdminTasksRoute
   '/admin/team': typeof AdminTeamRoute
   '/admin/users': typeof AdminUsersRoute
   '/employee/attendance': typeof EmployeeAttendanceRoute
   '/employee/home': typeof EmployeeHomeRoute
+  '/employee/tasks': typeof EmployeeTasksRoute
   '/hr/attendance': typeof HrAttendanceRoute
   '/hr/home': typeof HrHomeRoute
   '/hr/team': typeof HrTeamRoute
   '/hr/users': typeof HrUsersRoute
   '/leader/attendance': typeof LeaderAttendanceRoute
   '/leader/home': typeof LeaderHomeRoute
+  '/leader/review': typeof LeaderReviewRoute
+  '/leader/tasks': typeof LeaderTasksRoute
   '/leader/team': typeof LeaderTeamRoute
 }
 export interface FileRouteTypes {
@@ -190,16 +226,20 @@ export interface FileRouteTypes {
     | '/admin/attendance'
     | '/admin/home'
     | '/admin/settings'
+    | '/admin/tasks'
     | '/admin/team'
     | '/admin/users'
     | '/employee/attendance'
     | '/employee/home'
+    | '/employee/tasks'
     | '/hr/attendance'
     | '/hr/home'
     | '/hr/team'
     | '/hr/users'
     | '/leader/attendance'
     | '/leader/home'
+    | '/leader/review'
+    | '/leader/tasks'
     | '/leader/team'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -210,16 +250,20 @@ export interface FileRouteTypes {
     | '/admin/attendance'
     | '/admin/home'
     | '/admin/settings'
+    | '/admin/tasks'
     | '/admin/team'
     | '/admin/users'
     | '/employee/attendance'
     | '/employee/home'
+    | '/employee/tasks'
     | '/hr/attendance'
     | '/hr/home'
     | '/hr/team'
     | '/hr/users'
     | '/leader/attendance'
     | '/leader/home'
+    | '/leader/review'
+    | '/leader/tasks'
     | '/leader/team'
   id:
     | '__root__'
@@ -230,16 +274,20 @@ export interface FileRouteTypes {
     | '/admin/attendance'
     | '/admin/home'
     | '/admin/settings'
+    | '/admin/tasks'
     | '/admin/team'
     | '/admin/users'
     | '/employee/attendance'
     | '/employee/home'
+    | '/employee/tasks'
     | '/hr/attendance'
     | '/hr/home'
     | '/hr/team'
     | '/hr/users'
     | '/leader/attendance'
     | '/leader/home'
+    | '/leader/review'
+    | '/leader/tasks'
     | '/leader/team'
   fileRoutesById: FileRoutesById
 }
@@ -251,16 +299,20 @@ export interface RootRouteChildren {
   AdminAttendanceRoute: typeof AdminAttendanceRoute
   AdminHomeRoute: typeof AdminHomeRoute
   AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminTasksRoute: typeof AdminTasksRoute
   AdminTeamRoute: typeof AdminTeamRoute
   AdminUsersRoute: typeof AdminUsersRoute
   EmployeeAttendanceRoute: typeof EmployeeAttendanceRoute
   EmployeeHomeRoute: typeof EmployeeHomeRoute
+  EmployeeTasksRoute: typeof EmployeeTasksRoute
   HrAttendanceRoute: typeof HrAttendanceRoute
   HrHomeRoute: typeof HrHomeRoute
   HrTeamRoute: typeof HrTeamRoute
   HrUsersRoute: typeof HrUsersRoute
   LeaderAttendanceRoute: typeof LeaderAttendanceRoute
   LeaderHomeRoute: typeof LeaderHomeRoute
+  LeaderReviewRoute: typeof LeaderReviewRoute
+  LeaderTasksRoute: typeof LeaderTasksRoute
   LeaderTeamRoute: typeof LeaderTeamRoute
 }
 
@@ -299,6 +351,20 @@ declare module '@tanstack/react-router' {
       path: '/leader/team'
       fullPath: '/leader/team'
       preLoaderRoute: typeof LeaderTeamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/leader/tasks': {
+      id: '/leader/tasks'
+      path: '/leader/tasks'
+      fullPath: '/leader/tasks'
+      preLoaderRoute: typeof LeaderTasksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/leader/review': {
+      id: '/leader/review'
+      path: '/leader/review'
+      fullPath: '/leader/review'
+      preLoaderRoute: typeof LeaderReviewRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/leader/home': {
@@ -343,6 +409,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HrAttendanceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/employee/tasks': {
+      id: '/employee/tasks'
+      path: '/employee/tasks'
+      fullPath: '/employee/tasks'
+      preLoaderRoute: typeof EmployeeTasksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/employee/home': {
       id: '/employee/home'
       path: '/employee/home'
@@ -369,6 +442,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/team'
       fullPath: '/admin/team'
       preLoaderRoute: typeof AdminTeamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/tasks': {
+      id: '/admin/tasks'
+      path: '/admin/tasks'
+      fullPath: '/admin/tasks'
+      preLoaderRoute: typeof AdminTasksRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/settings': {
@@ -403,16 +483,20 @@ const rootRouteChildren: RootRouteChildren = {
   AdminAttendanceRoute: AdminAttendanceRoute,
   AdminHomeRoute: AdminHomeRoute,
   AdminSettingsRoute: AdminSettingsRoute,
+  AdminTasksRoute: AdminTasksRoute,
   AdminTeamRoute: AdminTeamRoute,
   AdminUsersRoute: AdminUsersRoute,
   EmployeeAttendanceRoute: EmployeeAttendanceRoute,
   EmployeeHomeRoute: EmployeeHomeRoute,
+  EmployeeTasksRoute: EmployeeTasksRoute,
   HrAttendanceRoute: HrAttendanceRoute,
   HrHomeRoute: HrHomeRoute,
   HrTeamRoute: HrTeamRoute,
   HrUsersRoute: HrUsersRoute,
   LeaderAttendanceRoute: LeaderAttendanceRoute,
   LeaderHomeRoute: LeaderHomeRoute,
+  LeaderReviewRoute: LeaderReviewRoute,
+  LeaderTasksRoute: LeaderTasksRoute,
   LeaderTeamRoute: LeaderTeamRoute,
 }
 export const routeTree = rootRouteImport

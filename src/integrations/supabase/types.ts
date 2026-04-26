@@ -157,6 +157,71 @@ export type Database = {
           },
         ]
       }
+      task_assignees: {
+        Row: {
+          created_at: string
+          task_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          task_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          task_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "task_assignees_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tasks: {
+        Row: {
+          company_id: string
+          created_at: string
+          created_by: string
+          deadline: string | null
+          description: string | null
+          id: string
+          status: Database["public"]["Enums"]["task_status"]
+          team_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          created_by: string
+          deadline?: string | null
+          description?: string | null
+          id?: string
+          status?: Database["public"]["Enums"]["task_status"]
+          team_id: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          created_by?: string
+          deadline?: string | null
+          description?: string | null
+          id?: string
+          status?: Database["public"]["Enums"]["task_status"]
+          team_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       teams: {
         Row: {
           company_id: string
@@ -221,6 +286,62 @@ export type Database = {
           },
         ]
       }
+      work_updates: {
+        Row: {
+          company_id: string
+          created_at: string
+          description: string
+          id: string
+          image_url: string | null
+          review_note: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: Database["public"]["Enums"]["work_update_status"]
+          task_id: string
+          team_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          description: string
+          id?: string
+          image_url?: string | null
+          review_note?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["work_update_status"]
+          task_id: string
+          team_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          description?: string
+          id?: string
+          image_url?: string | null
+          review_note?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["work_update_status"]
+          task_id?: string
+          team_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "work_updates_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -234,9 +355,19 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_team_leader: {
+        Args: { _team_id: string; _user_id: string }
+        Returns: boolean
+      }
+      user_can_see_task: {
+        Args: { _task_id: string; _user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       app_role: "admin" | "hr" | "leader" | "employee"
+      task_status: "pending" | "in_progress" | "completed"
+      work_update_status: "pending_review" | "approved" | "rejected" | "on_hold"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -365,6 +496,8 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "hr", "leader", "employee"],
+      task_status: ["pending", "in_progress", "completed"],
+      work_update_status: ["pending_review", "approved", "rejected", "on_hold"],
     },
   },
 } as const
