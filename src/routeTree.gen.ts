@@ -13,6 +13,7 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApprovalsIndexRouteImport } from './routes/approvals.index'
 import { Route as LeaderTeamRouteImport } from './routes/leader.team'
 import { Route as LeaderTasksRouteImport } from './routes/leader.tasks'
 import { Route as LeaderReviewRouteImport } from './routes/leader.review'
@@ -25,6 +26,7 @@ import { Route as HrAttendanceRouteImport } from './routes/hr.attendance'
 import { Route as EmployeeTasksRouteImport } from './routes/employee.tasks'
 import { Route as EmployeeHomeRouteImport } from './routes/employee.home'
 import { Route as EmployeeAttendanceRouteImport } from './routes/employee.attendance'
+import { Route as ApprovalsIdRouteImport } from './routes/approvals.$id'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AdminTeamRouteImport } from './routes/admin.team'
 import { Route as AdminTasksRouteImport } from './routes/admin.tasks'
@@ -50,6 +52,11 @@ const LoginRoute = LoginRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApprovalsIndexRoute = ApprovalsIndexRouteImport.update({
+  id: '/approvals/',
+  path: '/approvals/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LeaderTeamRoute = LeaderTeamRouteImport.update({
@@ -112,6 +119,11 @@ const EmployeeAttendanceRoute = EmployeeAttendanceRouteImport.update({
   path: '/employee/attendance',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApprovalsIdRoute = ApprovalsIdRouteImport.update({
+  id: '/approvals/$id',
+  path: '/approvals/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminUsersRoute = AdminUsersRouteImport.update({
   id: '/admin/users',
   path: '/admin/users',
@@ -154,6 +166,7 @@ export interface FileRoutesByFullPath {
   '/admin/tasks': typeof AdminTasksRoute
   '/admin/team': typeof AdminTeamRoute
   '/admin/users': typeof AdminUsersRoute
+  '/approvals/$id': typeof ApprovalsIdRoute
   '/employee/attendance': typeof EmployeeAttendanceRoute
   '/employee/home': typeof EmployeeHomeRoute
   '/employee/tasks': typeof EmployeeTasksRoute
@@ -166,6 +179,7 @@ export interface FileRoutesByFullPath {
   '/leader/review': typeof LeaderReviewRoute
   '/leader/tasks': typeof LeaderTasksRoute
   '/leader/team': typeof LeaderTeamRoute
+  '/approvals/': typeof ApprovalsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -178,6 +192,7 @@ export interface FileRoutesByTo {
   '/admin/tasks': typeof AdminTasksRoute
   '/admin/team': typeof AdminTeamRoute
   '/admin/users': typeof AdminUsersRoute
+  '/approvals/$id': typeof ApprovalsIdRoute
   '/employee/attendance': typeof EmployeeAttendanceRoute
   '/employee/home': typeof EmployeeHomeRoute
   '/employee/tasks': typeof EmployeeTasksRoute
@@ -190,6 +205,7 @@ export interface FileRoutesByTo {
   '/leader/review': typeof LeaderReviewRoute
   '/leader/tasks': typeof LeaderTasksRoute
   '/leader/team': typeof LeaderTeamRoute
+  '/approvals': typeof ApprovalsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -203,6 +219,7 @@ export interface FileRoutesById {
   '/admin/tasks': typeof AdminTasksRoute
   '/admin/team': typeof AdminTeamRoute
   '/admin/users': typeof AdminUsersRoute
+  '/approvals/$id': typeof ApprovalsIdRoute
   '/employee/attendance': typeof EmployeeAttendanceRoute
   '/employee/home': typeof EmployeeHomeRoute
   '/employee/tasks': typeof EmployeeTasksRoute
@@ -215,6 +232,7 @@ export interface FileRoutesById {
   '/leader/review': typeof LeaderReviewRoute
   '/leader/tasks': typeof LeaderTasksRoute
   '/leader/team': typeof LeaderTeamRoute
+  '/approvals/': typeof ApprovalsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -229,6 +247,7 @@ export interface FileRouteTypes {
     | '/admin/tasks'
     | '/admin/team'
     | '/admin/users'
+    | '/approvals/$id'
     | '/employee/attendance'
     | '/employee/home'
     | '/employee/tasks'
@@ -241,6 +260,7 @@ export interface FileRouteTypes {
     | '/leader/review'
     | '/leader/tasks'
     | '/leader/team'
+    | '/approvals/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -253,6 +273,7 @@ export interface FileRouteTypes {
     | '/admin/tasks'
     | '/admin/team'
     | '/admin/users'
+    | '/approvals/$id'
     | '/employee/attendance'
     | '/employee/home'
     | '/employee/tasks'
@@ -265,6 +286,7 @@ export interface FileRouteTypes {
     | '/leader/review'
     | '/leader/tasks'
     | '/leader/team'
+    | '/approvals'
   id:
     | '__root__'
     | '/'
@@ -277,6 +299,7 @@ export interface FileRouteTypes {
     | '/admin/tasks'
     | '/admin/team'
     | '/admin/users'
+    | '/approvals/$id'
     | '/employee/attendance'
     | '/employee/home'
     | '/employee/tasks'
@@ -289,6 +312,7 @@ export interface FileRouteTypes {
     | '/leader/review'
     | '/leader/tasks'
     | '/leader/team'
+    | '/approvals/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -302,6 +326,7 @@ export interface RootRouteChildren {
   AdminTasksRoute: typeof AdminTasksRoute
   AdminTeamRoute: typeof AdminTeamRoute
   AdminUsersRoute: typeof AdminUsersRoute
+  ApprovalsIdRoute: typeof ApprovalsIdRoute
   EmployeeAttendanceRoute: typeof EmployeeAttendanceRoute
   EmployeeHomeRoute: typeof EmployeeHomeRoute
   EmployeeTasksRoute: typeof EmployeeTasksRoute
@@ -314,6 +339,7 @@ export interface RootRouteChildren {
   LeaderReviewRoute: typeof LeaderReviewRoute
   LeaderTasksRoute: typeof LeaderTasksRoute
   LeaderTeamRoute: typeof LeaderTeamRoute
+  ApprovalsIndexRoute: typeof ApprovalsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -344,6 +370,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/approvals/': {
+      id: '/approvals/'
+      path: '/approvals'
+      fullPath: '/approvals/'
+      preLoaderRoute: typeof ApprovalsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/leader/team': {
@@ -430,6 +463,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EmployeeAttendanceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/approvals/$id': {
+      id: '/approvals/$id'
+      path: '/approvals/$id'
+      fullPath: '/approvals/$id'
+      preLoaderRoute: typeof ApprovalsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/users': {
       id: '/admin/users'
       path: '/admin/users'
@@ -486,6 +526,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminTasksRoute: AdminTasksRoute,
   AdminTeamRoute: AdminTeamRoute,
   AdminUsersRoute: AdminUsersRoute,
+  ApprovalsIdRoute: ApprovalsIdRoute,
   EmployeeAttendanceRoute: EmployeeAttendanceRoute,
   EmployeeHomeRoute: EmployeeHomeRoute,
   EmployeeTasksRoute: EmployeeTasksRoute,
@@ -498,6 +539,7 @@ const rootRouteChildren: RootRouteChildren = {
   LeaderReviewRoute: LeaderReviewRoute,
   LeaderTasksRoute: LeaderTasksRoute,
   LeaderTeamRoute: LeaderTeamRoute,
+  ApprovalsIndexRoute: ApprovalsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
