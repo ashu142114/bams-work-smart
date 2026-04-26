@@ -144,13 +144,27 @@ export function PunchCard() {
   };
 
   const handlePunchOut = async () => {
-    if (!today) return;
+    if (!today || !user) return;
     if (!workUpdate.trim() || !taskUpdate.trim()) {
       toast.error("Work update and task update are required");
       return;
     }
     setPunchingOut(true);
     try {
+      // MANDATORY: must have submitted at least one work update today
+      const startOfDay = new Date();
+      startOfDay.setHours(0, 0, 0, 0);
+      const { count, error: cntErr } = await supabase
+        .from("work_updates")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", user.id)
+        .gte("created_at", startOfDay.toISOString());
+      if (cntErr) throw cntErr;
+      if (!count || count === 0) {
+        toast.error("Submit at least one task work update before punch out");
+        setPunchingOut(false);
+        return;
+      }
       const pos = await getPosition().catch(() => null);
       const { error } = await supabase
         .from("attendance")
